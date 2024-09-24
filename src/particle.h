@@ -35,6 +35,15 @@ struct Particle {
     return f * dir.normalized();
   };
 
+  // Added by Dominique
+  bool operator==(const Particle &other) const {
+    return m_x == other.m_x &&
+           m_p == other.m_p &&
+           m_v == other.m_v &&
+           m_f == other.m_f &&
+           m_q == other.m_q;
+  }
+
   Vector2d m_x; // position courante
   Vector2d m_p; // position precedente
   Vector2d m_v; // vitesse
