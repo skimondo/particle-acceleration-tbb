@@ -2,7 +2,10 @@
 callgrind*
 build-profile/
 build-release/
+build/
 results/
+*.mp4
+*.dat
 
 # Prerequisites
 *.d
@@ -60,3 +63,4 @@ dkms.conf
 bench_*.json
 
 CMakeLists.txt.user
+
