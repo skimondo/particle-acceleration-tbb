@@ -1,20 +1,19 @@
-#include <chrono>
 #include <tbb/global_control.h>
 #include <tbb/tbb.h>
 
-#include "colormap.h"
-#include "particle.h"
-#include "uqam/tp.h"
+#include <chrono>
 
+#include "colormap.h"
 #include "experiments.h"
+#include "particle.h"
 #include "potential.h"
 #include "potentialparallel.h"
+#include "uqam/tp.h"
 
 // Raccourcis utilisé dans lab-01
 using ns = std::chrono::nanoseconds;
 
-int main(int argc, char **argv) {
-
+int main(int argc, char** argv) {
   const int num_repetition = 10;
 
   auto ncpus = std::thread::hardware_concurrency();
@@ -39,23 +38,23 @@ int main(int argc, char **argv) {
   experiment_crystal(numpart, particles_serial);
   experiment_crystal(numpart, particles_parallel);
 
-  IPotential *serial = new PotentialSerial(resolution, resolution);
-  IPotential *parallel = new PotentialParallel(resolution, resolution);
+  IPotential* serial = new PotentialSerial(resolution, resolution);
+  IPotential* parallel = new PotentialParallel(resolution, resolution);
 
   // SÉRIE
 
   // SÉRIE
   long long total_elapsed_time_serial = 0;
-    for (int i = 0; i < num_repetition; ++i) {
-      auto t1 = std::chrono::high_resolution_clock::now();
-      serial->run(particles_serial, max_iter, dt, substeps, update_scale, cmap, outfmt, verbose);
-      auto t2 = std::chrono::high_resolution_clock::now();
+  for (int i = 0; i < num_repetition; ++i) {
+    auto t1 = std::chrono::high_resolution_clock::now();
+    serial->run(particles_serial, max_iter, dt, substeps, update_scale, cmap, outfmt, verbose);
+    auto t2 = std::chrono::high_resolution_clock::now();
 
-      auto elapsed_time = std::chrono::duration_cast<ns>(t2 - t1).count();
-      total_elapsed_time_serial += elapsed_time;
-    }
+    auto elapsed_time = std::chrono::duration_cast<ns>(t2 - t1).count();
+    total_elapsed_time_serial += elapsed_time;
+  }
 
-    auto avg_elapsed_time_serial = total_elapsed_time_serial / num_repetition;
+  auto avg_elapsed_time_serial = total_elapsed_time_serial / num_repetition;
 
   log << "# ncpu temps acceleration" << "\n";
 
@@ -64,15 +63,15 @@ int main(int argc, char **argv) {
     ncpus = ncpus > 0 ? ncpus : 1;
 
     for (int num_threads = 1; num_threads <= ncpus; ++num_threads) {
-      long long total_elapsed_time_parallel = 0; // Reset total elapsed time for each thread count
+      long long total_elapsed_time_parallel = 0;  // Reset total elapsed time for each thread count
 
-              // Set the number of threads globally for TBB
+      // Set the number of threads globally for TBB
       tbb::global_control gc(tbb::global_control::max_allowed_parallelism, num_threads);
 
       for (int i = 0; i < num_repetition; ++i) {
         auto t1 = std::chrono::high_resolution_clock::now();
 
-                // Run the parallel function
+        // Run the parallel function
         parallel->run(particles_parallel, max_iter, dt, substeps, update_scale, cmap, outfmt, verbose);
 
         auto t2 = std::chrono::high_resolution_clock::now();
@@ -81,7 +80,7 @@ int main(int argc, char **argv) {
         total_elapsed_time_parallel += elapsed_time;
       }
 
-      auto avg_elapsed_time_parallel = total_elapsed_time_parallel / num_repetition; // Calculate average time
+      auto avg_elapsed_time_parallel = total_elapsed_time_parallel / num_repetition;  // Calculate average time
       double acceleration = static_cast<double>(avg_elapsed_time_serial) / avg_elapsed_time_parallel;
 
       log << num_threads << " " << avg_elapsed_time_parallel << " " << acceleration << "\n";

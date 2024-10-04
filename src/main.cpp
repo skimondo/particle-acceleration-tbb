@@ -1,10 +1,10 @@
+#include <uqam/tp.h>
+
+#include <Eigen/Dense>
 #include <filesystem>
 #include <format>
 #include <iostream>
-#include <uqam/tp.h>
 #include <vector>
-
-#include <Eigen/Dense>
 
 #include "colormap.h"
 #include "experiments.h"
@@ -19,7 +19,7 @@ using namespace Eigen;
 // (i,j) pour un tableau 2D avec une largeur w
 #define IDX2(i, j, w) (i * w + j)
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   // Charger la carte des couleurs
   std::string colormap_name(SOURCE_DIR "/data/colormap_parula.png");
   bool verbose = false;
@@ -41,14 +41,11 @@ int main(int argc, char **argv) {
   args.AddOption(&resol, "-r", "--resolution", "image resolution");
   args.AddOption(&experiment, "-e", "--experiment", "experiment id");
   args.AddOption(&outfmt, "-o", "--output", "output file template");
-  args.AddOption(&update_scale, "-us", "--update-scale", "-nus",
-                 "--no-update-scale", "update color scale at each timestep");
-  args.AddOption(&parallel, "-p", "--parallel",
-                 "parallel engine (0: serial, 1: tbb)");
-  args.AddOption(&numpart, "-n", "--num-particles",
-                 "number of particles to create");
-  args.AddOption(&substeps, "-s", "--substeps",
-                 "number of substeps per timestep");
+  args.AddOption(&update_scale, "-us", "--update-scale", "-nus", "--no-update-scale",
+                 "update color scale at each timestep");
+  args.AddOption(&parallel, "-p", "--parallel", "parallel engine (0: serial, 1: tbb)");
+  args.AddOption(&numpart, "-n", "--num-particles", "number of particles to create");
+  args.AddOption(&substeps, "-s", "--substeps", "number of substeps per timestep");
 
   args.Parse();
   if (!args.Good()) {
@@ -84,15 +81,14 @@ int main(int argc, char **argv) {
     std::cout << "*** PARTICULES DEBUT ***" << std::endl;
     std::cout << std::fixed << std::setprecision(3) << std::setw(6);
     for (int i = 0; i < particles.size(); i++) {
-      const Particle &c = particles[i];
-      std::cout << "particule " << i << " " << c.m_x.transpose() << " "
-                << c.m_v.transpose() << " " << c.m_q << "\n";
+      const Particle& c = particles[i];
+      std::cout << "particule " << i << " " << c.m_x.transpose() << " " << c.m_v.transpose() << " " << c.m_q << "\n";
     }
     std::cout << "*** PARTICULES FIN ***" << std::endl;
   }
 
   // Calculer le potentiel électrique sur la grille
-  IPotential *simulator;
+  IPotential* simulator;
   if (parallel == 0) {
     simulator = new PotentialSerial(resol, resol);
   } else {

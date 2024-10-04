@@ -15,35 +15,30 @@ public:
   virtual ~IPotential() = default;
 
   // Calculer le champs du potentiel électrique
-  virtual void compute_field(std::vector<Particle> &charge, double &lo,
-                             double &hi) = 0;
+  virtual void compute_field(std::vector<Particle>& charge, double& lo, double& hi) = 0;
 
   // Déplacer les particules en fonction des forces entre elles
-  virtual void move_particles(std::vector<Particle> &charge, double dt,
-                              int substeps) = 0;
+  virtual void move_particles(std::vector<Particle>& charge, double dt, int substeps) = 0;
 
   // Sauvegarder le champs du potentiel électrique courant dans une image
-  virtual void save_solution(std::ostream &ofs, ColorMap &cmap) = 0;
+  virtual void save_solution(std::ostream& ofs, ColorMap& cmap) = 0;
 
   // Exécuter la simulation au complet
   // Oui, il y a beaucoup d'arguments, ce serait sans doute mieux de faire une
   // structure, mais bon, ça marche ;-)
-  void run(std::vector<Particle> &particles, int max_iter, double dt,
-           int substeps, bool update_scale, ColorMap &cmap, std::string outfmt,
-           bool verbose);
+  void run(std::vector<Particle>& particles, int max_iter, double dt, int substeps, bool update_scale, ColorMap& cmap,
+           std::string outfmt, bool verbose);
 };
 
 class PotentialSerial : public IPotential {
 public:
   PotentialSerial(int width_, int height_)
-      : m_width(width_), m_height(height_), m_sol(m_width * m_height),
-        m_img(m_width, m_height) {}
+      : m_width(width_), m_height(height_), m_sol(m_width * m_height), m_img(m_width, m_height) {
+  }
 
-  void compute_field(std::vector<Particle> &charge, double &lo,
-                     double &hi) override;
-  void move_particles(std::vector<Particle> &charge, double dt,
-                      int substeps) override;
-  void save_solution(std::ostream &ofs, ColorMap &cmap) override;
+  void compute_field(std::vector<Particle>& charge, double& lo, double& hi) override;
+  void move_particles(std::vector<Particle>& charge, double dt, int substeps) override;
+  void save_solution(std::ostream& ofs, ColorMap& cmap) override;
 
   int m_width;
   int m_height;

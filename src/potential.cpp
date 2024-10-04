@@ -1,11 +1,9 @@
-#include <format>
-
 #include "potential.h"
 
-void IPotential::run(std::vector<Particle> &particles, int max_iter, double dt,
-                     int substeps, bool update_scale, ColorMap &cmap,
-                     std::string outfmt, bool verbose) {
+#include <format>
 
+void IPotential::run(std::vector<Particle>& particles, int max_iter, double dt, int substeps, bool update_scale,
+                     ColorMap& cmap, std::string outfmt, bool verbose) {
   double time = 0.0;
   int iter = 0;
   double lo;
@@ -51,8 +49,7 @@ void IPotential::run(std::vector<Particle> &particles, int max_iter, double dt,
   }
 }
 
-void PotentialSerial::compute_field(std::vector<Particle> &charge, double &lo,
-                                    double &hi) {
+void PotentialSerial::compute_field(std::vector<Particle>& charge, double& lo, double& hi) {
   lo = std::numeric_limits<double>::max();
   hi = std::numeric_limits<double>::min();
   int n = charge.size();
@@ -72,15 +69,13 @@ void PotentialSerial::compute_field(std::vector<Particle> &charge, double &lo,
   }
 }
 
-void PotentialSerial::move_particles(std::vector<Particle> &charge, double dt,
-                                     int substeps) {
+void PotentialSerial::move_particles(std::vector<Particle>& charge, double dt, int substeps) {
   int n = charge.size();
   double ssdt = dt / substeps;
   for (int ss = 0; ss < substeps; ss++) {
-
     // Calculer les forces entre les charges
     for (int i = 0; i < n; i++) {
-      Particle &c = charge[i];
+      Particle& c = charge[i];
       Vector2d f = Vector2d::Zero();
       for (int j = 0; j < n; j++) {
         if (i != j) {
@@ -92,8 +87,7 @@ void PotentialSerial::move_particles(std::vector<Particle> &charge, double dt,
 
     // On déplace ensuite les charges
     for (int i = 0; i < n; i++) {
-
-      Particle &c = charge[i];
+      Particle& c = charge[i];
       // mettre à jour la vitesse en fonction de l'accélération
       c.m_v += c.m_f * ssdt;
 
@@ -106,7 +100,7 @@ void PotentialSerial::move_particles(std::vector<Particle> &charge, double dt,
   }
 }
 
-void PotentialSerial::save_solution(std::ostream &ofs, ColorMap &cmap) {
+void PotentialSerial::save_solution(std::ostream& ofs, ColorMap& cmap) {
   for (int i = 0; i < m_height; i++) {
     for (int j = 0; j < m_width; j++) {
       double v = m_sol[IDX2(i, j, m_width)];

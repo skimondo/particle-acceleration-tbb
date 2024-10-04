@@ -2,13 +2,13 @@
 
 #include <random>
 
-void experiment_basic(std::vector<Particle> &particles) {
+void experiment_basic(std::vector<Particle>& particles) {
   const double delta = 0.01;
   particles.push_back(Particle({0.5 - delta, 0.5}, {0, 0}, 1));
   particles.push_back(Particle({0.5 + delta, 0.5}, {0, 0}, -1));
 }
 
-void experiment_random(int n, std::vector<Particle> &particles) {
+void experiment_random(int n, std::vector<Particle>& particles) {
   std::mt19937 rnd(0);
   double margin = 0.2;
   std::uniform_real_distribution<double> pos(0.0 + margin, 1.0 - margin);
@@ -18,7 +18,7 @@ void experiment_random(int n, std::vector<Particle> &particles) {
   }
 }
 
-void experiment_crystal(int n, std::vector<Particle> &particles) {
+void experiment_crystal(int n, std::vector<Particle>& particles) {
   // regular pattern of particles in the center
   int nrows = std::ceil(std::sqrt(n));
   int ncols = n / nrows;
@@ -41,7 +41,7 @@ void experiment_crystal(int n, std::vector<Particle> &particles) {
   }
 }
 
-void experiment_collision(int n, std::vector<Particle> &particles) {
+void experiment_collision(int n, std::vector<Particle>& particles) {
   // colliding particles
   double step = 0.5 / (n - 1);
 

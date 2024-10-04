@@ -4,13 +4,11 @@
 #include <png++/png.hpp>
 
 struct ColorMap {
-
   ColorMap() {
-    set_scale(std::numeric_limits<double>::max(),
-              std::numeric_limits<double>::min());
+    set_scale(std::numeric_limits<double>::max(), std::numeric_limits<double>::min());
   }
 
-  void load(const std::string &filename) {
+  void load(const std::string& filename) {
     png::image<png::rgb_pixel> img;
     img.read(filename);
     int w = img.get_width() - 4;

@@ -8,14 +8,13 @@ extern const double k;
 extern const double eps;
 
 struct Particle {
-
   // Constructeur: position, vitesse et charge
-  Particle(const Vector2d &p_, const Vector2d &v_, double q_)
-      : m_x(p_), m_p(0, 0), m_v(v_), m_f(0, 0), m_q(q_) {}
+  Particle(const Vector2d& p_, const Vector2d& v_, double q_) : m_x(p_), m_p(0, 0), m_v(v_), m_f(0, 0), m_q(q_) {
+  }
 
   // Contribution au potentiel de la particule courant à la distance passée en
   // argument.
-  inline double potential_at(const Vector2d &loc) const {
+  inline double potential_at(const Vector2d& loc) const {
     /*
      * le champs du potentiel contient une discontinuité à la position de la
      * charge elle-même On ajouter une petite constante pour éviter une
@@ -28,16 +27,16 @@ struct Particle {
   };
 
   // Calcule la force que l'autre particule exerice sur celle-ci
-  inline Vector2d force(const Particle &o) const {
-    Vector2d dir = m_x - o.m_x;           // direction
-    double r = dir.norm() + eps;          // distance
-    double f = k * o.m_q * m_q / (r * r); // loi de coulomb
+  inline Vector2d force(const Particle& o) const {
+    Vector2d dir = m_x - o.m_x;            // direction
+    double r = dir.norm() + eps;           // distance
+    double f = k * o.m_q * m_q / (r * r);  // loi de coulomb
     return f * dir.normalized();
   };
 
-  Vector2d m_x; // position courante
-  Vector2d m_p; // position precedente
-  Vector2d m_v; // vitesse
-  Vector2d m_f; // force
-  double m_q;   // charge
+  Vector2d m_x;  // position courante
+  Vector2d m_p;  // position precedente
+  Vector2d m_v;  // vitesse
+  Vector2d m_f;  // force
+  double m_q;    // charge
 };
