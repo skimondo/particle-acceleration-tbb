@@ -15,6 +15,13 @@
 
 #define DATA_DIR SOURCE_DIR "/test/data"
 
+/*
+ * Dominique Elias
+ * ELID14019800
+ * 01/10/2024
+ *
+ */
+
 using namespace Catch;
 
 static const double abstol = 1e-6;

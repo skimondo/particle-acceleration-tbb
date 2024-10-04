@@ -10,6 +10,13 @@
 #include "potentialparallel.h"
 #include "uqam/tp.h"
 
+/*
+ * Dominique Elias
+ * ELID14019800
+ * 01/10/2024
+ *
+ */
+
 // Raccourcis utilisé dans lab-01
 using ns = std::chrono::nanoseconds;
 
@@ -42,8 +49,6 @@ int main(int argc, char** argv) {
   IPotential* parallel = new PotentialParallel(resolution, resolution);
 
   // SÉRIE
-
-  // SÉRIE
   long long total_elapsed_time_serial = 0;
   for (int i = 0; i < num_repetition; ++i) {
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -57,7 +62,6 @@ int main(int argc, char** argv) {
   auto avg_elapsed_time_serial = total_elapsed_time_serial / num_repetition;
 
   log << "# ncpu temps acceleration" << "\n";
-
   // PARALLEL
   {
     ncpus = ncpus > 0 ? ncpus : 1;
