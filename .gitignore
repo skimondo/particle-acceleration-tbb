@@ -6,6 +6,7 @@ build/
 results/
 *.mp4
 *.dat
+*.png
 
 # Prerequisites
 *.d
