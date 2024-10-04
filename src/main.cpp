@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     args.PrintUsage(std::cout);
     return 1;
   }
-  args.PrintOptions(std::cout);
+  // args.PrintOptions(std::cout);
 
   std::filesystem::path path(outfmt);
   std::filesystem::path basedir = path.parent_path();
@@ -102,6 +102,6 @@ int main(int argc, char **argv) {
   simulator->run(particles, max_iter, dt, substeps, update_scale, cmap, outfmt, verbose);
 
   delete simulator;
-  std::cout << "Fin normale du programme" << std::endl;
+  // std::cout << "Fin normale du programme" << std::endl;
   return 0;
 }
