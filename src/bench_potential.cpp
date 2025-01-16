@@ -37,7 +37,14 @@ int main(int argc, char** argv) {
   bool verbose = false;
 
   std::ostringstream neant;
-  std::ofstream log("bench-random.dat");
+  // std::ofstream log("bench-random.dat");
+
+  std::string log_path = "bench-random.dat";
+  std::ofstream log(log_path);
+  if (!log.is_open()) {
+    std::cerr << "Error: Could not create or open log file: " << log_path << std::endl;
+    return 1;
+  }
 
   std::vector<Particle> particles_serial;
   std::vector<Particle> particles_parallel;

@@ -26,7 +26,7 @@ using namespace Catch;
 
 static const double abstol = 1e-6;
 
-TEST_CASE("PotentialParallelBasic") {
+TEST_CASE("PotentialParallelBasicExperiment") {
   int resol = 512;
   double dt = 1e-9;
   int substeps = 10;
@@ -84,34 +84,11 @@ TEST_CASE("PotentialParallelBasic") {
     parallel->save_solution(oss_parallel, cmap);
     CHECK(oss_serial.str() == oss_parallel.str());
   }
-
-  // this section to be studied further
-  SECTION("SaveSolution_exhaustive") {
-    std::ostringstream oss_serial, oss_parallel;
-    serial->save_solution(oss_serial, cmap);
-    parallel->save_solution(oss_parallel, cmap);
-
-    std::string serial_output = oss_serial.str();
-    std::string parallel_output = oss_parallel.str();
-
-    std::istringstream serial_stream(serial_output);
-    std::istringstream parallel_stream(parallel_output);
-
-    std::string serial_line, parallel_line;
-    size_t line_number = 0;
-
-    while (std::getline(serial_stream, serial_line) && std::getline(parallel_stream, parallel_line)) {
-      line_number++;
-      CHECK(serial_line == parallel_line);
-    }
-
-    CHECK(serial_stream.eof() == parallel_stream.eof());
-  }
   delete serial;
   delete parallel;
 }
 
-TEST_CASE("PotentialParallelexperiment_crystal") {
+TEST_CASE("PotentialParallelCrystalExperiment") {
   int resol = 512;
   double dt = 1e-9;
   int substeps = 10;
@@ -171,33 +148,11 @@ TEST_CASE("PotentialParallelexperiment_crystal") {
     CHECK(oss_serial.str() == oss_parallel.str());
   }
 
-  // this section to be studied further
-  SECTION("SaveSolution_exhaustive") {
-    std::ostringstream oss_serial, oss_parallel;
-    serial->save_solution(oss_serial, cmap);
-    parallel->save_solution(oss_parallel, cmap);
-
-    std::string serial_output = oss_serial.str();
-    std::string parallel_output = oss_parallel.str();
-
-    std::istringstream serial_stream(serial_output);
-    std::istringstream parallel_stream(parallel_output);
-
-    std::string serial_line, parallel_line;
-    size_t line_number = 0;
-
-    while (std::getline(serial_stream, serial_line) && std::getline(parallel_stream, parallel_line)) {
-      line_number++;
-      CHECK(serial_line == parallel_line);
-    }
-
-    CHECK(serial_stream.eof() == parallel_stream.eof());
-  }
   delete serial;
   delete parallel;
 }
 
-TEST_CASE("PotentialParallelexperiment_collision") {
+TEST_CASE("PotentialParallelCollisionExperiment") {
   int resol = 512;
   double dt = 1e-9;
   int substeps = 10;
@@ -257,33 +212,11 @@ TEST_CASE("PotentialParallelexperiment_collision") {
     CHECK(oss_serial.str() == oss_parallel.str());
   }
 
-  // this section to be studied further
-  SECTION("SaveSolution_exhaustive") {
-    std::ostringstream oss_serial, oss_parallel;
-    serial->save_solution(oss_serial, cmap);
-    parallel->save_solution(oss_parallel, cmap);
-
-    std::string serial_output = oss_serial.str();
-    std::string parallel_output = oss_parallel.str();
-
-    std::istringstream serial_stream(serial_output);
-    std::istringstream parallel_stream(parallel_output);
-
-    std::string serial_line, parallel_line;
-    size_t line_number = 0;
-
-    while (std::getline(serial_stream, serial_line) && std::getline(parallel_stream, parallel_line)) {
-      line_number++;
-      CHECK(serial_line == parallel_line);
-    }
-
-    CHECK(serial_stream.eof() == parallel_stream.eof());
-  }
   delete serial;
   delete parallel;
 }
 
-TEST_CASE("PotentialParallelexperiment_random") {
+TEST_CASE("PotentialParallelRandomExperiment") {
   int resol = 512;
   double dt = 1e-9;
   int substeps = 10;
@@ -343,28 +276,6 @@ TEST_CASE("PotentialParallelexperiment_random") {
     CHECK(oss_serial.str() == oss_parallel.str());
   }
 
-  // this section to be studied further
-  SECTION("SaveSolution_exhaustive") {
-    std::ostringstream oss_serial, oss_parallel;
-    serial->save_solution(oss_serial, cmap);
-    parallel->save_solution(oss_parallel, cmap);
-
-    std::string serial_output = oss_serial.str();
-    std::string parallel_output = oss_parallel.str();
-
-    std::istringstream serial_stream(serial_output);
-    std::istringstream parallel_stream(parallel_output);
-
-    std::string serial_line, parallel_line;
-    size_t line_number = 0;
-
-    while (std::getline(serial_stream, serial_line) && std::getline(parallel_stream, parallel_line)) {
-      line_number++;
-      CHECK(serial_line == parallel_line);
-    }
-
-    CHECK(serial_stream.eof() == parallel_stream.eof());
-  }
   delete serial;
   delete parallel;
 }

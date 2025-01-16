@@ -25,8 +25,7 @@ void IPotential::run(std::vector<Particle>& particles, int max_iter, double dt, 
   }
 
   while (iter < max_iter) {
-    // std::cout << "iter: " << ++iter << " time: " << time << std::endl;
-    ++iter;
+    std::cout << "iter: " << ++iter << " time: " << time << std::endl;
     // Déplacement des charges
     move_particles(particles, dt, substeps);
 
